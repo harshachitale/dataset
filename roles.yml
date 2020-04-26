@@ -1,0 +1,5 @@
+ - src: /home/ansible/Downloads/haproxy.tar.gz
+   name: balancers
+ - src: /home/ansible/Downloads/info.tar.gz
+   name: php.info
+

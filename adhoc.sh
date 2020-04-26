@@ -1,0 +1,1 @@
+ansible all -m  yum_repository -a 'name=extrepo description="EPEL YUM repo" file=external_repos baseurl=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 enabled=1 gpgcheck=1' -b -u ansible

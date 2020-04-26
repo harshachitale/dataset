@@ -1,0 +1,17 @@
+---
+ - name:  printing msg from perticular grp
+   hosts: all
+   become: true
+   remote_user: ansible
+   tasks:
+    - name: printng from unnati
+      copy:
+         content: hello from apache
+         dest: /etc/issue
+      when: inventory_hostname in groups ['unnati']
+    - name: printng from redhat
+      copy:
+         content: bye from apache
+         dest: /etc/issue
+      when: inventory_hostname in groups ['redhat']
+

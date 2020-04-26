@@ -1,0 +1,27 @@
+---
+ - name: creating symlink
+   hosts: all
+   become: true
+   remote_user: ansible
+   tasks: 
+    - name: creating dir
+      file:
+         path: /metadata1
+         state: directory
+         mode: 0665
+    - name: creating file content
+      copy:
+         content: "heeellooooo"
+         dest: /metadata1/index.html
+    - name: creating link
+      file: 
+         src: /metadata1/
+         dest: /var/www/html/index.html
+         force: yes
+         state: link
+         setype: httpd_sys_content_t
+
+    - service:
+         name: httpd
+         state: restarted
+         enabled: yes

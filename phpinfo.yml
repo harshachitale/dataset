@@ -1,0 +1,7 @@
+---
+ - name: installing php.info
+   hosts: all
+   remote_user: ansible
+   become: true
+   roles:
+      - roles/php.info

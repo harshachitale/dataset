@@ -1,0 +1,10 @@
+---
+ - name: printing sg from group
+   hosts: all
+   become: true
+   remote_user: ansible
+   tasks:
+    - name: copy
+      copy:
+         content: hello from {{group_names}}
+         dest: /etc/motd

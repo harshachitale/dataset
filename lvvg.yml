@@ -1,0 +1,49 @@
+---
+ - name: creating lv
+   hosts: all
+   remote_user: ansible
+   become: true
+   tasks:  
+    - name: creating lv of 15000m
+      lvol:
+        vg: partvg
+        lv: test1
+        size: 1500m
+      register: lv
+      ignore_errors: true
+      when: ansible_lvm.vgs.partvg is defined
+    - name: crete lv of 800m
+      lvol:
+        vg: partvg
+        lv: test1
+        size: 800m
+      register: vg
+      ignore_errors: true
+      when: ansible_lvm.vgs.partvg is defined and lv.failed == true
+    - name: printing msg for 1500m
+      debug:
+        msg: "vg of 1500 does not exist"
+      when: ansible_lvm.vgs.partvg is defined and ansible_lvm.vgs.partvg.size_g < "1500m"
+    - name: printing msg if both fails
+      debug: 
+        msg: "vg does not exists"
+      when: ansible_lvm.vgs.partvg is not defined
+    - name: formatting lv
+      filesystem:
+        fstype: ext4
+        dev: /dev/partvg/test1
+      when: ansible_lvm.vgs.partvg is defined
+    - name: creating mounting point
+      file:
+         name: /test1
+         state: directory
+      when: ansible_lvm.vgs.partvg is defined
+    - name: mounting 
+      mount:
+         fstype: ext4
+         src: /dev/partvg/test1
+         path: /test1
+         state: mounted
+      when: ansible_lvm.vgs.partvg is defined
+
+
