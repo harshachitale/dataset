@@ -1,0 +1,5 @@
+{% for group in gropus['all']%}
+{{hostvars[group]['ansible_facts']['hostname']}}
+{{hostvars[group]['ansible_facts']['default_ipv4']['address']}}
+{{hostvars[group]['ansible_facts']['bios_version']}}
+{{%end for%}}
